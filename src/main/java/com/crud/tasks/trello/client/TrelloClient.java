@@ -19,11 +19,9 @@ import static java.util.Optional.ofNullable;
 
 @Component
 public class TrelloClient {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(TrelloClient.class);
     @Autowired
     private TrelloConfig trelloConfig;
-
     @Autowired
     private RestTemplate restTemplate;
 
@@ -31,25 +29,17 @@ public class TrelloClient {
         URI url = UriComponentsBuilder.fromHttpUrl(trelloConfig.getTrelloApiEndpoint() + "/members/ganzes/boards")
                 .queryParam("key", trelloConfig.getTrelloAppKey())
                 .queryParam("token", trelloConfig.getTrelloToken())
-                .queryParam("username", trelloConfig.getTrelloUsername())
+                //.queryParam("username", trelloConfig.getTrelloUsername())
                 .queryParam("fields", "name,id")
                 .queryParam("lists", "all")
                 .build()
                 .encode()
                 .toUri();
-
+        System.out.println(url);
         return url;
     }
 
     public List<TrelloBoardDto> getTrelloBoards() {
-
-        //TrelloBoardDto[] boardsResponse = restTemplate.getForObject(getUrlBuilder(), TrelloBoardDto[].class);
-
-        /*if (boardsResponse != null) {
-            return Arrays.asList(boardsResponse);
-        }
-        return new ArrayList<>();*/
-
         try {
             TrelloBoardDto[] boardsResponse = restTemplate.getForObject(getUrlBuilder(), TrelloBoardDto[].class);
             return Arrays.asList(ofNullable(boardsResponse).orElse(new TrelloBoardDto[0]));
