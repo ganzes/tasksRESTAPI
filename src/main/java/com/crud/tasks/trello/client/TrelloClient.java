@@ -35,7 +35,7 @@ public class TrelloClient {
                 .build()
                 .encode()
                 .toUri();
-        System.out.println(url);
+
         return url;
     }
 
