@@ -30,15 +30,11 @@ public class SimpleEmailService {
     private SimpleMailMessage createMailMessage(final Mail mail) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
 
-        if (mail.getToCc() == null) {
-            mailMessage.setTo(mail.getMailTo());
-            mailMessage.setSubject(mail.getSubject());
-            mailMessage.setText(mail.getMessage());
-            mailMessage.setCc((String)null);
-        } else {
-            mailMessage.setTo(mail.getMailTo());
-            mailMessage.setSubject(mail.getSubject());
-            mailMessage.setText(mail.getMessage());
+        mailMessage.setTo(mail.getMailTo());
+        mailMessage.setSubject(mail.getSubject());
+        mailMessage.setText(mail.getMessage());
+
+        if (mail.getToCc() != null) {
             mailMessage.setCc(mail.getToCc());
         }
 
