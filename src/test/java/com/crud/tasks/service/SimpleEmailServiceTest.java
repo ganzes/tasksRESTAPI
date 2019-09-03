@@ -24,13 +24,13 @@ public class SimpleEmailServiceTest {
     @Test
     public void shouldSendEmail(){
         //Given
-        Mail mail = new Mail("test@test.com", "test","Test Message", "test2@test.com");
+        Mail mail = new Mail("test@test.com", "test","Test Message");//, "test2@test.com");
 
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(mail.getMailTo());
         mailMessage.setSubject(mail.getSubject());
         mailMessage.setText(mail.getMessage());
-        mailMessage.setCc(mail.getToCc());
+        //mailMessage.setCc(mail.getToCc());
 
         //When
         simpleEmailService.send(mail);
@@ -38,32 +38,4 @@ public class SimpleEmailServiceTest {
         //Then
         verify(javaMailSender, times(1)).send(mailMessage);
     }
-
-    /*@Test
-    public void toCcNull(){
-        //Given
-        Mail mail = new Mail("test@test.com", "test","Test Message", null);
-
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-
-        //When
-        if (mail.getToCc() == null) {
-            mailMessage.setTo(mail.getMailTo());
-            mailMessage.setSubject(mail.getSubject());
-            mailMessage.setText(mail.getMessage());
-            mailMessage.setCc((String)null);
-            simpleEmailService.send(mail);
-        } else {
-            mailMessage.setTo(mail.getMailTo());
-            mailMessage.setSubject(mail.getSubject());
-            mailMessage.setText(mail.getMessage());
-            mailMessage.setCc(mail.getToCc());
-            simpleEmailService.send(mail);
-        }
-
-        //ofNullable(mailMessage).ifPresent(email -> mailMessage.setCc(mail.getToCc()));
-
-        //Then
-        verify(javaMailSender, times(1)).send(mailMessage);
-    }*/
 }
