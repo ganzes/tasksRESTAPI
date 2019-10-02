@@ -108,7 +108,7 @@ public class TaskControllerTest {
         //When & Then
         mockMvc.perform(put("/v1/trello/updateTask")
                 .contentType(MediaType.APPLICATION_JSON)
-                .characterEncoding("UFT-8")
+                .characterEncoding("UTF-8")
                 .contentType(jsonContent))
                 .andExpect(jsonPath("$.id", is(1L)))
                 .andExpect(jsonPath("$.title", is("testTitle")))
@@ -130,7 +130,7 @@ public class TaskControllerTest {
         //When & Then
         mockMvc.perform(post("/v1/trello/createTask")
                 .contentType(MediaType.APPLICATION_JSON)
-                .characterEncoding("UFT-8")
+                .characterEncoding("UTF-8")
                 .contentType(jsonContent))
                 .andExpect(jsonPath("$.id", is(1L)))
                 .andExpect(jsonPath("$.title", is("testTitle")))
