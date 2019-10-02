@@ -4,7 +4,6 @@ import com.crud.tasks.domain.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
@@ -16,12 +15,13 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest
 public class TrelloMapperTestSuite {
 
-    @Autowired
-    private TrelloMapper trelloMapper;
+    //@Autowired
+   // public static TrelloMapper trelloMapper;
 
     @Test
-    public void mapToBoardsTest() throws NullPointerException{
+    public void mapToBoardsTest() {
         //Given
+        TrelloMapper trelloMapper = new TrelloMapper();
         List<TrelloListDto> testTrelloListDto = new ArrayList<>();
         List<TrelloBoardDto> testTrelloBoardDto = new ArrayList<>();
         testTrelloBoardDto.add(new TrelloBoardDto("testId01", "testName01", testTrelloListDto));
@@ -34,6 +34,7 @@ public class TrelloMapperTestSuite {
     @Test
     public void mapToBoardsDtoTest() {
         //Given
+        TrelloMapper trelloMapper = new TrelloMapper();
         List<TrelloList> testTrelloList = new ArrayList<>();
         List<TrelloBoard> testTrelloBoard = new ArrayList<>();
         testTrelloBoard.add(new TrelloBoard("testId01", "testName01", testTrelloList));
@@ -48,6 +49,7 @@ public class TrelloMapperTestSuite {
     @Test
     public void mapToListTest() {
         //Given
+        TrelloMapper trelloMapper = new TrelloMapper();
         List<TrelloListDto> testTrelloListDto = new ArrayList<>();
         testTrelloListDto.add(new TrelloListDto("testIdListDto01", "testNameListDto01",true));
         //When
@@ -59,6 +61,7 @@ public class TrelloMapperTestSuite {
     @Test
     public void mapToListDtoTest() {
         //Given
+        TrelloMapper trelloMapper = new TrelloMapper();
         List<TrelloList> testTrelloList = new ArrayList<>();
         testTrelloList.add(new TrelloList("testIdList01", "testNameList01",true));
         //When
@@ -70,6 +73,7 @@ public class TrelloMapperTestSuite {
     @Test
     public void mapToCardDtoTest() {
         //Given
+        TrelloMapper trelloMapper = new TrelloMapper();
         TrelloCard testTrelloCard = new TrelloCard("testName01","testDescription01", "testPos01", "testListId01");
         //When
         TrelloCardDto testTrelloCardDto = trelloMapper.mapToCardDto(testTrelloCard);
@@ -80,6 +84,7 @@ public class TrelloMapperTestSuite {
     @Test
     public void mapToCardTest() {
         //Given
+        TrelloMapper trelloMapper = new TrelloMapper();
         TrelloCardDto testTrelloCardDto = new TrelloCardDto("testName01","testDescription01", "testPos01", "testListId01");
         //When
         TrelloCard testTrelloCard = trelloMapper.mapToCard(testTrelloCardDto);
