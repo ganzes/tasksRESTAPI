@@ -4,25 +4,25 @@ import com.crud.tasks.domain.Task;
 import com.crud.tasks.domain.TaskDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest
 public class TaskMapperTestSuite {
 
-   /* @Autowired
+    @Autowired
     private TaskMapper taskMapper;
-*/
+
     @Test
     public void testMapToTask() {
         //Given
-        TaskMapper taskMapper = new TaskMapper();
         TaskDto taskDto = new TaskDto(1L, "testTaskDtoName01", "testTaskContentDto01");
         //When
         Task task = taskMapper.mapToTask(taskDto);
@@ -33,7 +33,6 @@ public class TaskMapperTestSuite {
     @Test
     public void testMapToTaskDto() {
         //Given
-        TaskMapper taskMapper = new TaskMapper();
         Task task = new Task(1L, "testTaskName01", "testTaskContent01");
         //When
         TaskDto taskDto = taskMapper.mapToTaskDto(task);
@@ -44,7 +43,6 @@ public class TaskMapperTestSuite {
     @Test
     public void testMapToTaskDtoList() {
         //Given
-        TaskMapper taskMapper = new TaskMapper();
         Task task1 = new Task(1L, "testTaskName01", "testTaskContent02");
         Task task2 = new Task(2L, "testTaskName02", "testTaskContent02");
         List<Task> taskList = new ArrayList<>();

@@ -96,7 +96,7 @@ public class TrelloControllerTest {
         mockMvc.perform(post("/v1/trello/createTrelloCard")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
-                .contentType(jsonContent))
+                .content(jsonContent))//if .contentType, there is an error org.springframework.util.InvalidMimeTypeException: Invalid mime type
                 .andExpect(jsonPath("$.id", is("323")))
                 .andExpect(jsonPath("$.name", is("Test")))
                 .andExpect(jsonPath("$.shortUrl", is("http://test.com")));

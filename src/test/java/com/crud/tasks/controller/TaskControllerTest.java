@@ -40,6 +40,18 @@ public class TaskControllerTest {
     private TaskMapper taskMapper;
 
     @Test
+    public void getEmptyTasks() throws Exception {
+        //Given
+        List<Task> taskListTest = new ArrayList<>();
+
+        when(dbService.getAllTasks()).thenReturn(taskListTest);
+        //When & Then
+        mockMvc.perform(get("/v1/task/getTasks").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$", hasSize(0)))
+                .andExpect(status().isOk());
+    }
+
+    @Test
     public void getTasks() throws Exception {
         //Given
         Task taskTest = new Task(1L, "testTitle", "testContent");
@@ -106,11 +118,11 @@ public class TaskControllerTest {
         String jsonContent = gson.toJson(taskTestDto);
 
         //When & Then
-        mockMvc.perform(put("/v1/trello/updateTask")
+        mockMvc.perform(put("/v1/task/updateTask")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
-                .contentType(jsonContent))
-                .andExpect(jsonPath("$.id", is(1L)))
+                .content(jsonContent))
+                .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.title", is("testTitle")))
                 .andExpect(jsonPath("$.content", is("testContent")));
     }
@@ -121,31 +133,17 @@ public class TaskControllerTest {
         Task taskTest = new Task(1L, "testTitle", "testContent");
         TaskDto taskTestDto = new TaskDto(1L, "testTitle", "testContent");
 
-        when(taskMapper.mapToTaskDto(taskTest)).thenReturn(taskTestDto);
+        when(taskMapper.mapToTask(taskTestDto)).thenReturn(taskTest);
         when(dbService.saveTask(taskTest)).thenReturn(taskTest);
 
         Gson gson = new Gson();
         String jsonContent = gson.toJson(taskTestDto);
 
         //When & Then
-        mockMvc.perform(post("/v1/trello/createTask")
+        mockMvc.perform(post("/v1/task/createTask")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
-                .contentType(jsonContent))
-                .andExpect(jsonPath("$.id", is(1L)))
-                .andExpect(jsonPath("$.title", is("testTitle")))
-                .andExpect(jsonPath("$.content", is("testContent")));
-    }
-
-    @Test
-    public void getEmptyTasks() throws Exception {
-        //Given
-        List<Task> taskListTest = new ArrayList<>();
-
-        when(dbService.getAllTasks()).thenReturn(taskListTest);
-        //When & Then
-        mockMvc.perform(get("/v1/task/getTasks").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$", hasSize(0)))
+                .content(jsonContent))
                 .andExpect(status().isOk());
     }
 }
