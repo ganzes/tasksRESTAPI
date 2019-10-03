@@ -38,5 +38,6 @@ public class EmailSchedulerTest {
         simpleEmailService.send(mail);
         //Then
         verify(javaMailSender, times(1)).send(mailMessage);
+        verify(emailScheduler,times(1)).sendInformationEmail();
     }
 }

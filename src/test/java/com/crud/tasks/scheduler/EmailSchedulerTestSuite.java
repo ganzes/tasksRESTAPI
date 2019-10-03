@@ -4,26 +4,19 @@ import com.crud.tasks.domain.Mail;
 import com.crud.tasks.service.SimpleEmailService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EmailSchedulerTestSuite {
-
-    @InjectMocks
-    private SimpleEmailService simpleEmailService;
-
-    @Mock
-    private JavaMailSender javaMailSender;
-
     @Mock
     private EmailScheduler emailScheduler;
+
+    @Mock
+    private SimpleEmailService simpleEmailService;
 
     @Test
     public void sendInformationEmail() {
@@ -34,9 +27,11 @@ public class EmailSchedulerTestSuite {
         mailMessage.setSubject(mail.getSubject());
         mailMessage.setText(mail.getMessage());
         //When
+        doNothing().doThrow(new RuntimeException()).when(emailScheduler).sendInformationEmail();
         emailScheduler.sendInformationEmail();
         simpleEmailService.send(mail);
         //Then
         verify(emailScheduler, times(1)).sendInformationEmail();
+        verify(simpleEmailService,times(1)).send(mail);
     }
 }
