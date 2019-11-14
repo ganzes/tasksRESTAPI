@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class MailCreatorService {
 
@@ -18,6 +21,12 @@ public class MailCreatorService {
     private TemplateEngine templateEngine;
 
     public String buildTrelloCardEmail(String message) {
+
+        List<String> functionality = new ArrayList<>();
+        functionality.add("You can manage your tasks");
+        functionality.add("Provides connection with Trello Account");
+        functionality.add("Application allows sending tasks to Trello");
+
         Context contex = new Context();
         contex.setVariable("message", message);
         contex.setVariable("tasks_url", "http://localhost:80/crud");
@@ -25,6 +34,10 @@ public class MailCreatorService {
         contex.setVariable("admin_name", adminConfig.getAdminName());
         contex.setVariable("goodbye", "See ya later!");
         contex.setVariable("admin_company", adminConfig.getAdminCompany());
+        contex.setVariable("show_button", false);
+        contex.setVariable("is_friend", true);
+        contex.setVariable("admin_config", adminConfig);
+        contex.setVariable("application_functionality", functionality);
         return templateEngine.process("mail/created-trello-card-mail", contex);
     }
 }
